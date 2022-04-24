@@ -291,7 +291,7 @@ body .container .card .box .content a:hover {
 
           <h3>Criteria 5</h3>
           <p></p>
-          <a href="naac5.php">Go to Criteria</a>
+          <a href="criteria 5/index.php">Go to Criteria</a>
         </div>
       </div>
     </div>

@@ -1,29 +1,67 @@
 <?php
 include("excel.php");
-?>
+?><!DOCTYPE html>
 
-<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> 5.3.1 </title>
+    <title> 5.3.3 </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
 </head>
+<style> 
+.navbar {
+    overflow: hidden;
+    background-color: #2196f3;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index:1;
+  }
+  
+  .navbar img{
+    float:left;
+    padding-top: 5px;
+  }
+  
+  .navbar h3{
+    float: left;
+    color: #f2f2f2;
+    letter-spacing: normal;
+    padding-left: 20px;
+    padding-top: 14px;
+  }
+  
+  .navbar a {
+    float: right;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  
+  .navbar a:hover {
+    background: #ddd;
+    color: black;
+  }
+</style>
 <body>
-<nav class="navbar navbar-dark bg-primary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img src="https://i.postimg.cc/wvDjdZdp/logo.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-          Fr. Conceicao Rodrigues Institute Of Technology
-        </a>
-    </nav>
+
+    <div class="navbar mb-5">
+        <img class="logo"src="https://i.postimg.cc/wvDjdZdp/logo.png" alt="image" width="3%">
+        <h3 class="name">Fr. Conceicao Rodrigues Institute Of Technology</h3>
+        <a href="../logout.php">Logout</a>
+    </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="studentaddmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- this is add data form Make changes to variables, keep same variables -->
+    <div class="modal fade mt-2" id="studentaddmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -34,56 +72,46 @@ include("excel.php");
                     </button>
                 </div>
 
-                <form action="insertcode.php" method="POST">
+                <form action="insertcode.php" method="POST" enctype="multipart/form-data" >
 
                     <div class="modal-body">
                         <div class="form-group">
-                            <label> Name of Student </label>
-                            <input type="text" name="sname" class="form-control" placeholder="Enter Name">
+                            <label> First Name </label>
+                            <input type="text" name="fname" class="form-control" placeholder="Enter First Name">
                         </div>
 
                         <div class="form-group">
-                            <label> Award Name </label>
-                            <input type="text" name="aname" class="form-control" placeholder="Enter Award Name">
+                            <label> Last Name </label>
+                            <input type="text" name="lname" class="form-control" placeholder="Enter Last Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Roll Number </label>
+                            <input type="number" name="rnum" class="form-control" placeholder="Enter Roll Number">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Event Name </label>
+                            <input type="text" name="ename" class="form-control" placeholder="Enter Event Name">
                         </div>
 
                         <div class="form-group">
                             <label>Year</label>
-                            <select name="year" class="form-control">
+                            <select name="eyear" class="form-control">
                                 <option value="">--Select Year--</option>
-                                <option value="2020-21">2020-21</option>
-                                <option value="2021-22">2021-22</option>
+                                <option name="eyear" value="2017-18">2017-18</option>
+                                <option name="eyear" value="2018-19">2018-19</option>
+                                <option name="eyear" value="2019-20">2019-20</option>
+                                <option name="eyear" value="2020-21">2020-21</option>
+                                <option name="eyear" value="2021-22">2021-22</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label>Type</label>
-                            <select name="type" class="form-control">
-                                <option value="">--Select Type--</option>
-                                <option value="Team"> Team </option>
-                                <option value="Individual"> Individual </option>
-                            </select>
+                            <label>Upload File</label>
+                            <input type="file" name="files"> </input> 
                         </div>
 
-                        <div class="form-group">
-                            <label>Level</label>
-                            <select name="level" class="form-control">
-                                <option value="">--Select Level--</option>
-                                <option value="University">University</option>
-                                <option value="State">State</option>
-                                <option value="National">National</option>
-                                <option value="International">International</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Criteria</label>
-                            <select name="criteria" class="form-control">
-                                <option value="">--Select Criteria--</option>
-                                <option value="Sports">Sports</option>
-                                <option value="Cultural">Cultural</option>
-                            </select>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -95,13 +123,14 @@ include("excel.php");
         </div>
     </div>
 
-    <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+    <!-- EDIT POP UP FORM  -->
+    <!-- this is edit data form Make changes to variables and placeholder, keep same variables -->
     <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Edit sapr Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Edit Student Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -114,59 +143,38 @@ include("excel.php");
                         <input type="hidden" name="update_id" id="update_id">
 
                         <div class="form-group">
-                            <label> Name of Student </label>
-                            <input type="text" name="sname" class="form-control" placeholder="Enter Name">
+                            <label> First Name </label>
+                            <input type="text" name="fname" id="fname" class="form-control"
+                                placeholder="Enter First Name">
                         </div>
 
                         <div class="form-group">
-                            <label> Award Name </label>
-                            <input type="text" name="aname" class="form-control" placeholder="Enter Award Name">
+                            <label> Last Name </label>
+                            <input type="text" name="lname" id="lname" class="form-control"
+                                placeholder="Enter Last Name">
                         </div>
 
                         <div class="form-group">
-                            <label>Year</label>
-                            <select name="year" class="form-control">
-                                <option value="">--Select Year--</option>
-                                <option value="2020-21">2020-21</option>
-                                <option value="2021-22">2021-22</option>
-                            </select>
+                            <label> Roll Number </label>
+                            <input type="text" name="rnum" id="rnum" class="form-control"
+                                placeholder="Enter roll number">
                         </div>
 
                         <div class="form-group">
-                            <label>Type</label>
-                            <select name="type" class="form-control">
-                                <option value="">--Select Type--</option>
-                                <option value="Team"> Team </option>
-                                <option value="Individual"> Individual </option>
-                            </select>
+                            <label> Event Name </label>
+                            <input type="text" name="ename" id="ename" class="form-control"
+                                placeholder="Enter Event Name">
                         </div>
 
                         <div class="form-group">
                             <label>Year</label>
-                            <select name="year" class="form-control">
+                            <select name="eyear" class="form-control">
                                 <option value="">--Select Year--</option>
-                                <option value="Sports">Sports</option>
-                                <option value="Cultural">Cultural</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Level</label>
-                            <select name="level" class="form-control">
-                                <option value="">--Select Level--</option>
-                                <option value="University">University</option>
-                                <option value="State">State</option>
-                                <option value="National">National</option>
-                                <option value="International">International</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Criteria</label>
-                            <select name="criteria" class="form-control">
-                                <option value="">--Select Criteria--</option>
-                                <option value="Sports">Sports</option>
-                                <option value="Cultural">Cultural</option>
+                                <option name="eyear" value="2017-18">2017-18</option>
+                                <option name="eyear" value="2018-19">2018-19</option>
+                                <option name="eyear" value="2019-20">2019-20</option>
+                                <option name="eyear" value="2020-21">2020-21</option>
+                                <option name="eyear" value="2021-22">2021-22</option>
                             </select>
                         </div>
 
@@ -181,13 +189,14 @@ include("excel.php");
         </div>
     </div>
 
-    <!-- DELETE POP UP FORM (Bootstrap MODAL) -->
+    <!-- DELETE POP UP FORM  -->
+    <!-- dont make changes-->
     <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete sapr Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -211,22 +220,21 @@ include("excel.php");
         </div>
     </div>
 
-
-    <div class="container">
+ <!-- h2 change-->
+    <div class="container mt-5">
         <div class="jumbotron">
             <div class="card">
-                <h2> 5.3.1 </h2>
+                <h2> 5.3.3 </h2>
             </div>
             <div class="card">
                 <div class="card-body">
-                    <form action="#" method="post">
+                <form action="#" method="post">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#studentaddmodal"> 
                         ADD DATA
                     </button> &nbsp;
                     <button type="submit" id="export" name="export"
                     value="Export to excel" class="btn btn-success">Export To Excel</button>
                     </form>
-
                 </div>
             </div>
 
@@ -237,20 +245,21 @@ include("excel.php");
                 $connection = mysqli_connect("localhost","root","");
                 $db = mysqli_select_db($connection, 'sapr');
 
-                $query = "SELECT * FROM fivethreeone";
+                $query = "SELECT * FROM fivethreethree";
                 $query_run = mysqli_query($connection, $query);
-            ?>
+            ?>  <!-- th change -->
                     <table id="datatableid" class="table table-bordered table-dark">
                         <thead>
                             <tr>
-                                <th scope="col">Award Name</th>
-                                <th scope="col">Student Name </th>
-                                <th scope="col"> Type</th>
-                                <th scope="col"> Level </th>
-                                <th scope="col"> Criteria </th>
+                                <th scope="col">ID</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name </th>
+                                <th scope="col"> Roll Number </th>
+                                <th scope="col"> Event Name </th>
                                 <th scope="col"> Year </th>
                                 <th scope="col"> EDIT </th>
                                 <th scope="col"> DELETE </th>
+                                <th scope="col"> DOWNLOAD </th>
                             </tr>
                         </thead>
                         <?php
@@ -259,23 +268,25 @@ include("excel.php");
                     foreach($query_run as $row)
                     {
             ?>
-                        <tbody>
-                        
+                        <tbody> <!-- change -->
                             <tr>
-                                <td> <?php echo $row['aname']; ?> </td>
-                                <td> <?php echo $row['sname']; ?> </td>
-                                <td> <?php echo $row['type']; ?> </td>
-                                <td> <?php echo $row['level']; ?> </td>
-                                <td> <?php echo $row['criteria']; ?> </td>
-                                <td> <?php echo $row['year']; ?> </td>
+                                <td> <?php echo $row['id']; ?> </td>
+                                <td> <?php echo $row['fname']; ?> </td>
+                                <td> <?php echo $row['lname']; ?> </td>
+                                <td> <?php echo $row['rnum']; ?> </td>
+                                <td> <?php echo $row['ename']; ?> </td>
+                                <td> <?php echo $row['eyear']; ?> </td>
+                        
                                 <td>
                                     <button type="button" class="btn btn-success editbtn"> EDIT </button>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-danger deletebtn"> DELETE </button>
                                 </td>
+                                <td>
+                                    <a href="uploads/<?php echo $row['filename']; ?>" download> Download
+                                </td>
                             </tr>
-                            
                         </tbody>
                         <?php           
                     }
@@ -293,8 +304,6 @@ include("excel.php");
         </div>
     </div>
 
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
@@ -302,24 +311,6 @@ include("excel.php");
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-
-            $('.viewbtn').on('click', function () {
-                $('#viewmodal').modal('show');
-                $.ajax({ //create an ajax request to display.php
-                    type: "GET",
-                    url: "display.php",
-                    dataType: "html", //expect html to be returned                
-                    success: function (response) {
-                        $("#responsecontainer").html(response);
-                        //alert(response);
-                    }
-                });
-            });
-
-        });
-    </script>
 
 
     <script>
@@ -376,24 +367,16 @@ include("excel.php");
                 }).get();
 
                 console.log(data);
-
+                //chnage this keep same variable as above
                 $('#update_id').val(data[0]);
-                $('#aname').val(data[1]);
-                $('#sname').val(data[2]);
-                $('#type').val(data[3]);
-                $('#level').val(data[4]);
-                $('#criteria').val(data[4]);
-                $('#year').val(data[4]);
+                $('#fname').val(data[1]);
+                $('#lname').val(data[2]);
+                $('#rnum').val(data[3]);
+                $('#ename').val(data[4]);
+                $('#eyear').val(data[5]);
             });
-
         });
     </script>
 
-
 </body>
 </html>
-
-                            
-                                
-                                
-                                

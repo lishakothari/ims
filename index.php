@@ -8,28 +8,39 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         $password= sha1($password);
-        $usertype = $_POST['usertype'];
 
-        $sql = "SELECT * FROM users WHERE username=? AND password=? AND user_type=?";
+        $sql = "SELECT * FROM users WHERE username=? AND password=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss",$username,$password,$usertype);
+        $stmt->bind_param("ss",$username,$password);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
 
         session_regenerate_id();
-        $_SESSION['username'] = $row['username'];
-        $_SESSION['role'] = $row['user_type'];
+        $_SESSION['role'] = $row['username'];
+
         session_write_close();
 
-        if($result->num_rows==1 && $_SESSION['role']=="professor"){
-            header("location:5.3.3/index.php");
+        if($result->num_rows==1 && $_SESSION['role']=="superadmin"){
+          header("location:dashboard.php");
         }
-        else if($result->num_rows==1 && $_SESSION['role']=="admin"){
-            header("location:naac5.php");
+        else if($result->num_rows==1 && $_SESSION['role']=="criteria5admin"){
+          header("location:criteria 5/index.php");
         }
-        else if($result->num_rows==1 && $_SESSION['role']=="superadmin"){
-            header("location:dashboard.php");
+        else if($result->num_rows==1 && $_SESSION['role']=="criteria1admin"){
+          header("location:criteria 1/index.php");
+        }
+        else if($result->num_rows==1 && $_SESSION['role']=="criteria2admin"){
+          header("location:criteria 2/index.php");
+        }
+        else if($result->num_rows==1 && $_SESSION['role']=="5.3.3incharge"){
+            header("location:criteria 5/5.3.3/index.php");
+        }
+        else if($result->num_rows==1 && $_SESSION['role']=="5.3.1incharge"){
+          header("location:criteria 5/5.3.1/index.php");
+        }
+        else if($result->num_rows==1 && $_SESSION['role']=="5.1.3incharge"){
+          header("location:criteria 5/5.1.3/index.php");
         }
         else{
             $msg="username or password incorrect";
@@ -126,9 +137,9 @@
 </style>
 <body class="bg-dark">
 <div class="navbar">
-    <img class="logo"src="https://i.postimg.cc/wvDjdZdp/logo.png" alt="image" width="3%">
-    <h3 class="name">Fr. Conceicao Rodrigues Institute Of Technology</h3>
-  </div>
+      <img class="logo" src="https://i.postimg.cc/wvDjdZdp/logo.png" alt="image" width="3%">
+      <h3 class="name">Fr. Conceicao Rodrigues Institute Of Technology</h3>
+    </div>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-5 bg-light mt-5 px-0">
@@ -136,19 +147,16 @@
                 <form action= "<?= $_SERVER['PHP_SELF'] ?>" method="post" class="p-4">
 
                     <div class="form-group"> 
+                      <label> Enter Username </label>
                         <input type="text" name="username" class="form-control form-control-lg" placeholder="Username" required>
                     </div>
 
                     <div class="form-group"> 
-                        <input type="text" name="password" class="form-control form-control-lg" placeholder="Password" required>
+                      <label> Enter Password </label>
+                        <input type="password" id="pass" name="password" class="form-control form-control-lg" placeholder="Password" required>
                     </div>
 
-                    <div class="form-group"> 
-                        <label for="userType"> I am a :  </label>
-                        <input type="radio" name="usertype" value="professor" class="custom-radio" required> Professor | &nbsp;
-                        <input type="radio" name="usertype" value="admin" class="custom-radio" required> Criteria Admin | &nbsp;
-                        <input type="radio" name="usertype" value="superadmin" class="custom-radio" required> Main Admin |
-                    </div>
+                    <input type="checkbox" onclick="myFunction()">Show Password
 
                     <div class="form-group"> 
                         <input type="submit" name="login" class="btn btn-primary btn-block">
@@ -162,6 +170,18 @@
     </div>  
     <div class="footer">
 <p>Student Achievements and Placement Records</p>
-</div>  
+</div> 
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("pass");
+        if (x.type === "password") {
+          x.type = "text";
+        } else {
+          x.type = "password";
+        }
+    }
+</script>
+
 </body>
 </html>
