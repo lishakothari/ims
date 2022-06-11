@@ -154,7 +154,7 @@ body .container .card .box .content h2 {
   color: rgba(255, 255, 255, 0.1);
 }
 
-body .container .card .box .content h3 {
+body .container .card .box .content h4 {
   font-size: 1.8rem;
   color: #fff;
   z-index: 1;
@@ -163,7 +163,7 @@ body .container .card .box .content h3 {
 }
 
 body .container .card .box .content p {
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.9);
   z-index: 1;
@@ -241,85 +241,13 @@ body .container .card .box .content a:hover {
       <div class="box">
         <div class="content">
 
-          <h3>Criteria 1</h3>
-          <p>text</p>
-          <a href="5.1.1.html">Go to Criteria</a>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="card">
-      <div class="box">
-        <div class="content">
-
-          <h3>Criteria 2</h3>
-          <p></p>
-          <a href="5.1.2.html">Go to Criteria</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="box">
-        <div class="content">
-
-          <h3>Criteria 3</h3>
-          <p></p>
-          <a href="5.1.3.html">Go to Criteria</a>
-
-        </div>
-      </div>
-    </div>
-
-        
-    <div class="card">
-      <div class="box">
-        <div class="content">
-
-          <h3>Criteria 4</h3>
-          <p></p>
-          <a href="5.1.4.html">Go to Criteria</a>
-        </div>
-      </div>
-    </div>
-
-       
-    <div class="card">
-      <div class="box">
-        <div class="content">
-
-          <h3>Criteria 5</h3>
-          <p></p>
-          <a href="criteria 5/index.php">Go to Criteria</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="box">
-        <div class="content">
-
-          <h3>Criteria 6</h3>
-          <p></p>
-          <a href="5.2.2.html">Go to Criteria</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="box">
-        <div class="content">
-
-          <h3>Criteria 7 </h3>
-          <p></p>
-          <a href="5.2.3.html">Go to Criteria</a>
+          <h4>FDP/STTP</h4>
+          <p>organised by the Department</p>
+          <a href="fdp-sttp/index.php">Go to Criteria</a>
         </div>
       </div>
     </div>
         
-    
-
   <div class="footer">
   <a href="developers.html">Developers</a>
   <p>Student Achievements and Placement Records</p>

@@ -5,16 +5,18 @@ if(isset($_POST["export"])) {
 	header("Content-Disposition: attachment; filename=\"$filename\"");	
 	$show_coloumn = false;
 	if(!empty($query_run)) {
-	  foreach($query_run as $record) {
+	  foreach($query_run as $row) {
 		if(!$show_coloumn) {
 		  // display field/column names in first row
-		  echo implode("\t", array_keys($record)) . "\n";
+		  echo implode("\t", array_keys($row)) . "\n";
 		  $show_coloumn = true;
 		}
-		echo implode("\t", array_values($record)) . "\n";
+		echo implode("\t", array_values($row)) . "\n";
 	  }
 	}
 	exit;  
 } 
 ?>
+
+
 

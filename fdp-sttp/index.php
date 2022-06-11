@@ -2,17 +2,17 @@
 include("excel.php");
 ?><!DOCTYPE html>
 
-
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> 5.3.3 </title>
+    <title> FTP / STTP </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
 </head>
+
 <style> 
 .navbar {
     overflow: hidden;
@@ -56,7 +56,7 @@ include("excel.php");
     <div class="navbar mb-5">
         <img class="logo"src="https://i.postimg.cc/wvDjdZdp/logo.png" alt="image" width="3%">
         <h3 class="name">Fr. Conceicao Rodrigues Institute Of Technology</h3>
-        <a href="../logout.php">Logout</a>
+        <a href="logout.php">Logout</a>
     </div>
 
     <!-- Modal -->
@@ -66,7 +66,7 @@ include("excel.php");
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Student Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -75,37 +75,62 @@ include("excel.php");
                 <form action="insertcode.php" method="POST" enctype="multipart/form-data" >
 
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label> First Name </label>
-                            <input type="text" name="fname" class="form-control" placeholder="Enter First Name">
-                        </div>
-
-                        <div class="form-group">
-                            <label> Last Name </label>
-                            <input type="text" name="lname" class="form-control" placeholder="Enter Last Name">
-                        </div>
-
-                        <div class="form-group">
-                            <label> Roll Number </label>
-                            <input type="number" name="rnum" class="form-control" placeholder="Enter Roll Number">
-                        </div>
-
-                        <div class="form-group">
-                            <label> Event Name </label>
-                            <input type="text" name="ename" class="form-control" placeholder="Enter Event Name">
-                        </div>
 
                         <div class="form-group">
                             <label>Year</label>
                             <select name="eyear" class="form-control">
                                 <option value="">--Select Year--</option>
-                                <option name="eyear" value="2017-18">2017-18</option>
-                                <option name="eyear" value="2018-19">2018-19</option>
-                                <option name="eyear" value="2019-20">2019-20</option>
-                                <option name="eyear" value="2020-21">2020-21</option>
-                                <option name="eyear" value="2021-22">2021-22</option>
+                                <option name="academicyear" value="2017-18">2017-18</option>
+                                <option name="academicyear" value="2018-19">2018-19</option>
+                                <option name="academicyear" value="2019-20">2019-20</option>
+                                <option name="academicyear" value="2020-21">2020-21</option>
+                                <option name="academicyear" value="2021-22">2021-22</option>
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <label>Department</label>
+                            <select name="eyear" class="form-control">
+                                <option value="">--Select Department--</option>
+                                <option name="department" value="Computer">Computer</option>
+                                <option name="department" value="Mechanical">Mechanical</option>
+                                <option name="department" value="EXTC">EXTC</option>
+                                <option name="department" value="Electrical">Electrical</option>
+                                <option name="department" value="IT">IT</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Title of the professional development program </label>
+                            <input type="text" name="titleprogram" class="form-control" placeholder="Enter Title">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Approved by - </label>
+                            <select name="approvingbody" onchange='CheckApproval(this.value);'> 
+                                <option>--SELECT A BODY--</option>  
+                                <option value="AICTE">AICTE</option>
+                                <option value="ISTE">ISTE</option>
+                                <option value="others">others</option>
+                            </select>
+                            <input type="text" name="approvingbody" id="appproval" style='display:none;'/>
+                        </div>
+
+                        <div class="form-group">
+                            <label> If Sponsored, Enter Grant Amount </label>
+                            <input type="text" name="grantamount" class="form-control" placeholder="Enter Grant Amount">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Convener of FDP/STTP </label>
+                            <input type="text" name="convener" class="form-control" placeholder="Enter Name of Convener">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Number of Participants </label>
+                            <input type="number" name="participantcount" class="form-control" placeholder="Enter Number of Participants">
+                        </div>
+
 
                         <div class="form-group">
                             <label>Upload File</label>
@@ -143,39 +168,64 @@ include("excel.php");
                         <input type="hidden" name="update_id" id="update_id">
 
                         <div class="form-group">
-                            <label> First Name </label>
-                            <input type="text" name="fname" id="fname" class="form-control"
-                                placeholder="Enter First Name">
-                        </div>
-
-                        <div class="form-group">
-                            <label> Last Name </label>
-                            <input type="text" name="lname" id="lname" class="form-control"
-                                placeholder="Enter Last Name">
-                        </div>
-
-                        <div class="form-group">
-                            <label> Roll Number </label>
-                            <input type="text" name="rnum" id="rnum" class="form-control"
-                                placeholder="Enter roll number">
-                        </div>
-
-                        <div class="form-group">
-                            <label> Event Name </label>
-                            <input type="text" name="ename" id="ename" class="form-control"
-                                placeholder="Enter Event Name">
-                        </div>
-
-                        <div class="form-group">
                             <label>Year</label>
                             <select name="eyear" class="form-control">
                                 <option value="">--Select Year--</option>
-                                <option name="eyear" value="2017-18">2017-18</option>
-                                <option name="eyear" value="2018-19">2018-19</option>
-                                <option name="eyear" value="2019-20">2019-20</option>
-                                <option name="eyear" value="2020-21">2020-21</option>
-                                <option name="eyear" value="2021-22">2021-22</option>
+                                <option name="academicyear" value="2017-18">2017-18</option>
+                                <option name="academicyear" value="2018-19">2018-19</option>
+                                <option name="academicyear" value="2019-20">2019-20</option>
+                                <option name="academicyear" value="2020-21">2020-21</option>
+                                <option name="academicyear" value="2021-22">2021-22</option>
                             </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Department</label>
+                            <select name="eyear" class="form-control">
+                                <option value="">--Select Department--</option>
+                                <option name="department" value="Computer">Computer</option>
+                                <option name="department" value="Mechanical">Mechanical</option>
+                                <option name="department" value="EXTC">EXTC</option>
+                                <option name="department" value="Electrical">Electrical</option>
+                                <option name="department" value="IT">IT</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Title of the professional development program </label>
+                            <input type="text" name="title-progran" class="form-control" placeholder="Enter Title">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Approved by - </label>
+                            <select name="approvingbody" onchange='CheckApproval(this.value);'> 
+                                <option>--SELECT A BODY--</option>  
+                                <option value="AICTE">AICTE</option>
+                                <option value="ISTE">ISTE</option>
+                                <option value="others">others</option>
+                            </select>
+                            <input type="text" name="approvingbody" id="appproval" style='display:none;'/>
+                        </div>
+
+                        <div class="form-group">
+                            <label> If Sponsored, Enter Grant Amount </label>
+                            <input type="text" name="grantamount" class="form-control" placeholder="Enter Grant Amount">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Convener of FDP/STTP </label>
+                            <input type="text" name="convener" class="form-control" placeholder="Enter Name of Convener">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Number of Participants </label>
+                            <input type="number" name="participantcount" class="form-control" placeholder="Enter Number of Participants">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Upload File</label>
+                            <input type="file" name="files"> </input> 
                         </div>
 
                     </div>
@@ -212,7 +262,7 @@ include("excel.php");
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
-                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
+                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes, Delete it. </button>
                     </div>
                 </form>
 
@@ -221,14 +271,14 @@ include("excel.php");
     </div>
 
  <!-- h2 change-->
-    <div class="container mt-5">
-        <div class="jumbotron">
             <div class="card">
-                <h2> 5.3.3 </h2>
+                <div class="card-body">
+            <div class="card-body mt-5">
+                <h2> FTP / STTP </h2>
             </div>
             <div class="card">
                 <div class="card-body">
-                <form action="#" method="post">
+                <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#studentaddmodal"> 
                         ADD DATA
                     </button> &nbsp;
@@ -243,20 +293,22 @@ include("excel.php");
 
                     <?php
                 $connection = mysqli_connect("localhost","root","");
-                $db = mysqli_select_db($connection, 'sapr');
+                $db = mysqli_select_db($connection, 'teacher_portal');
 
-                $query = "SELECT * FROM fivethreethree";
+                $query = "SELECT * FROM ftpsttp";
                 $query_run = mysqli_query($connection, $query);
             ?>  <!-- th change -->
                     <table id="datatableid" class="table table-bordered table-dark">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name </th>
-                                <th scope="col"> Roll Number </th>
-                                <th scope="col"> Event Name </th>
-                                <th scope="col"> Year </th>
+                                <th scope="col"> ID </th>
+                                <th scope="col"> YEAR </th>
+                                <th scope="col"> DEPARTMENT </th>
+                                <th scope="col"> TITLE </th>
+                                <th scope="col"> APPROVING BODY </th>
+                                <th scope="col"> GRANT AMOUNT </th>
+                                <th scope="col"> CONVENER </th>
+                                <th scope="col"> PARTICIPANT COUNT </th>
                                 <th scope="col"> EDIT </th>
                                 <th scope="col"> DELETE </th>
                                 <th scope="col"> DOWNLOAD </th>
@@ -271,11 +323,13 @@ include("excel.php");
                         <tbody> <!-- change -->
                             <tr>
                                 <td> <?php echo $row['id']; ?> </td>
-                                <td> <?php echo $row['fname']; ?> </td>
-                                <td> <?php echo $row['lname']; ?> </td>
-                                <td> <?php echo $row['rnum']; ?> </td>
-                                <td> <?php echo $row['ename']; ?> </td>
-                                <td> <?php echo $row['eyear']; ?> </td>
+                                <td> <?php echo $row['academicyear']; ?> </td>
+                                <td> <?php echo $row['department']; ?> </td>
+                                <td> <?php echo $row['titleprogram']; ?> </td>
+                                <td> <?php echo $row['approvingbody']; ?> </td>
+                                <td> <?php echo $row['grantamount']; ?> </td>
+                                <td> <?php echo $row['convener']; ?> </td>
+                                <td> <?php echo $row['participantcount']; ?> </td>
                         
                                 <td>
                                     <button type="button" class="btn btn-success editbtn"> EDIT </button>
@@ -323,10 +377,6 @@ include("excel.php");
                     [10, 25, 50, "All"]
                 ],
                 responsive: true,
-                language: {
-                    search: "_INPUT_",
-                    searchPlaceholder: "Search Your Data",
-                }
             });
 
         });
@@ -369,14 +419,26 @@ include("excel.php");
                 console.log(data);
                 //chnage this keep same variable as above
                 $('#update_id').val(data[0]);
-                $('#fname').val(data[1]);
-                $('#lname').val(data[2]);
-                $('#rnum').val(data[3]);
-                $('#ename').val(data[4]);
-                $('#eyear').val(data[5]);
+                $('#academicyear').val(data[1]);
+                $('#department').val(data[2]);
+                $('#titleprogram').val(data[3]);
+                $('#approvingbody').val(data[4]);
+                $('#grantamount').val(data[5]);
+                $('#convener').val(data[6]);
+                $('#participantcount').val(data[6]);
             });
         });
     </script>
+
+    <script type="text/javascript">
+        function CheckApproval(val){
+        var element=document.getElementById('approval');
+        if(val=='--SELECT A BODY--'|| val=='others')
+        element.style.display='block';
+        else  
+        element.style.display='none';
+        }
+    </script> 
 
 </body>
 </html>

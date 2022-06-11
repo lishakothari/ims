@@ -14,7 +14,7 @@ if (isset($_POST['insertdata']))
         if (in_array($ext, $allowed))
         {
             // get last record id
-            $sql = 'select max(id) as id from fivethreethree';
+            $sql = 'select max(id) as id from ftpsttp';
             $result = mysqli_query($connection, $sql);
             if (count($result) > 0)
             {
@@ -29,7 +29,7 @@ if (isset($_POST['insertdata']))
             move_uploaded_file($_FILES['files']['tmp_name'],($path . $filename));
             
             // insert file details into database
-            $sql = "INSERT INTO fivethreethree(file) VALUES('$filename')";
+            $sql = "INSERT INTO ftpsttp(file) VALUES('$filename')";
             mysqli_query($connection, $sql);
             header("Location: index.php");
         }
