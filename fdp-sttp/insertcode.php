@@ -11,9 +11,15 @@ if(isset($_POST['insertdata']))
     $approvingbody = $_POST['approvingbody'];
     $grantamount = $_POST['grantamount'];
     $convener = $_POST['convener'];
+    $fromdate = $_POST['fromdate'];
+    $enddate = $_POST['enddate'];
     $participants = $_POST['participantcount'];
 
-    $query = "INSERT INTO ftpsttp (`academicyear`, `department`, `titleprogram`, `approvingbody`, `grantamount`, `convener`, `participantcount`) VALUES ('$academicyear', '$department', '$title', '$approvingbody', '$grantamount', '$convener', '$participants')";
+
+    $query = "INSERT INTO ftpsttp 
+    (`academicyear`, `department`, `titleprogram`, `approvingbody`, `grantamount`, `convener`, `fromdate`, `enddate`, `participantcount`) 
+    VALUES ('$academicyear', '$department', '$title', '$approvingbody', '$grantamount', '$convener', '$fromdate', '$enddate', '$participants')";
+    
     $query_run = mysqli_query($connection, $query);
 
     if($query_run)
@@ -28,4 +34,3 @@ if(isset($_POST['insertdata']))
 }
 
 ?>
-

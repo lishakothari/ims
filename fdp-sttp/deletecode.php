@@ -1,44 +1,23 @@
 <?php
+$connection = mysqli_connect("localhost","root","");
+$db = mysqli_select_db($connection, 'teacher_portal');
 
-include_once("connection.php");
-$db = new dbObj();
- 
-$sql_query = "SELECT * FROM ftpsttp";
-$resultset = mysqli_query($connString, $sql_query);
-$tasks = array();
-while( $rows = mysqli_fetch_assoc($resultset) ) {
-$tasks[] = $rows;
-}
-
-if(isset($_POST["ExportType"]))
+if(isset($_POST['deletedata']))
 {
-    switch($_POST["ExportType"])
+    $id = $_POST['delete_id'];
+
+    $query = "DELETE FROM ftpsttp WHERE id='$id'";
+    $query_run = mysqli_query($connection, $query);
+
+    if($query_run)
     {
-        case "export-to-excel" :
-            // Submission from
-$filename = "phpflow_data_export_".date('Ymd') . ".xls";
-            header("Content-Type: application/vnd.ms-excel");
-header("Content-Disposition: attachment; filename=\"$filename\"");
-ExportFile($tasks);
-//$_POST["ExportType"] = '';
-            exit();
-        default :
-            die("Unknown action : ".$_POST["action"]);
-            break;
+        echo '<script> alert("Data Deleted"); </script>';
+        header("Location:index.php");
     }
-}
-function ExportFile($records) {
-$heading = false;
-if(!empty($records))
-  foreach($records as $row) {
-if(!$heading) {
-  // display field/column names as a first row
-  echo implode("\t", array_keys($row)) . "\n";
-  $heading = true;
-}
-echo implode("\t", array_values($row)) . "\n";
-  }
-exit;
+    else
+    {
+        echo '<script> alert("Data Not Deleted"); </script>';
+    }
 }
 
 ?>

@@ -8,7 +8,7 @@ if (isset($_POST['insertdata']))
     if($filename != '')
     {
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        $allowed = ['pdf', 'txt', 'doc', 'docx', 'png', 'jpg', 'jpeg',  'gif'];
+        $allowed = ['pdf'];
     
         //check if file type is valid
         if (in_array($ext, $allowed))

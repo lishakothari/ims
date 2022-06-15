@@ -1,6 +1,8 @@
 <?php
 include("excel.php");
-?><!DOCTYPE html>
+?>
+
+<!DOCTYPE html>
 
 <html lang="en">
 
@@ -127,6 +129,16 @@ include("excel.php");
                         </div>
 
                         <div class="form-group">
+                            <label> Starting Date </label>
+                            <input type="date" name="fromdate" class="form-control" placeholder="Enter Start Date">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Ending Date </label>
+                            <input type="date" name="enddate" class="form-control" placeholder="Enter End Date">
+                        </div>
+
+                        <div class="form-group">
                             <label> Number of Participants </label>
                             <input type="number" name="participantcount" class="form-control" placeholder="Enter Number of Participants">
                         </div>
@@ -169,7 +181,7 @@ include("excel.php");
 
                         <div class="form-group">
                             <label>Year</label>
-                            <select name="eyear" class="form-control">
+                            <select name="academicyear" class="form-control">
                                 <option value="">--Select Year--</option>
                                 <option name="academicyear" value="2017-18">2017-18</option>
                                 <option name="academicyear" value="2018-19">2018-19</option>
@@ -181,7 +193,7 @@ include("excel.php");
 
                         <div class="form-group">
                             <label>Department</label>
-                            <select name="eyear" class="form-control">
+                            <select name="department" class="form-control">
                                 <option value="">--Select Department--</option>
                                 <option name="department" value="Computer">Computer</option>
                                 <option name="department" value="Mechanical">Mechanical</option>
@@ -197,14 +209,12 @@ include("excel.php");
                         </div>
 
                         <div class="form-group">
-                            <label> Approved by - </label>
-                            <select name="approvingbody" onchange='CheckApproval(this.value);'> 
-                                <option>--SELECT A BODY--</option>  
-                                <option value="AICTE">AICTE</option>
-                                <option value="ISTE">ISTE</option>
-                                <option value="others">others</option>
+                            <label>Department</label>
+                            <select name="approvingbody" class="form-control">
+                                <option value="">--Select BODY--</option>
+                                <option name="approvingbody" value="AICTE">AICTE</option>
+                                <option name="approvingbody" value="ISTE">ISTE</option>
                             </select>
-                            <input type="text" name="approvingbody" id="appproval" style='display:none;'/>
                         </div>
 
                         <div class="form-group">
@@ -224,8 +234,8 @@ include("excel.php");
 
 
                         <div class="form-group">
-                            <label>Upload File</label>
-                            <input type="file" name="files"> </input> 
+                            <input type="file" name="pdf_file" accept=".pdf"/>
+                            <input type="hidden" name="MAX_FILE_SIZE" value="67108864"/> <!--64 MB's worth in bytes-->
                         </div>
 
                     </div>
@@ -277,15 +287,15 @@ include("excel.php");
                 <h2> FTP / STTP </h2>
             </div>
             <div class="card">
-                <div class="card-body">
+                <div class="card-body btn-group">
                 <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#studentaddmodal"> 
                         ADD DATA
-                    </button> &nbsp;
-                    <button type="submit" id="export" name="export"
-                    value="Export to excel" class="btn btn-success">Export To Excel</button>
-                    </form>
-                </div>
+                    </button>
+            </form> &nbsp;
+            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">					
+				<button type="submit" id="export_data" name='export_data' value="Export to excel" class="btn btn-success">Export to excel</button>
+			</form>
             </div>
 
             <div class="card">
@@ -303,33 +313,37 @@ include("excel.php");
                             <tr>
                                 <th scope="col"> ID </th>
                                 <th scope="col"> YEAR </th>
-                                <th scope="col"> DEPARTMENT </th>
+                                <th scope="col"> DEPT </th>
                                 <th scope="col"> TITLE </th>
                                 <th scope="col"> APPROVING BODY </th>
                                 <th scope="col"> GRANT AMOUNT </th>
                                 <th scope="col"> CONVENER </th>
-                                <th scope="col"> PARTICIPANT COUNT </th>
+                                <th scope="col"> FROM DATE </th>
+                                <th scope="col"> END DATE </th>
+                                <th scope="col"> COUNT </th>
                                 <th scope="col"> EDIT </th>
                                 <th scope="col"> DELETE </th>
                                 <th scope="col"> DOWNLOAD </th>
                             </tr>
                         </thead>
                         <?php
-                if($query_run)
+                if($developer_records)
                 {
-                    foreach($query_run as $row)
+                    foreach($developer_records as $developer)
                     {
             ?>
                         <tbody> <!-- change -->
                             <tr>
-                                <td> <?php echo $row['id']; ?> </td>
-                                <td> <?php echo $row['academicyear']; ?> </td>
-                                <td> <?php echo $row['department']; ?> </td>
-                                <td> <?php echo $row['titleprogram']; ?> </td>
-                                <td> <?php echo $row['approvingbody']; ?> </td>
-                                <td> <?php echo $row['grantamount']; ?> </td>
-                                <td> <?php echo $row['convener']; ?> </td>
-                                <td> <?php echo $row['participantcount']; ?> </td>
+                                <td> <?php echo $developer['id']; ?> </td>
+                                <td> <?php echo $developer['academicyear']; ?> </td>
+                                <td> <?php echo $developer['department']; ?> </td>
+                                <td> <?php echo $developer['titleprogram']; ?> </td>
+                                <td> <?php echo $developer['approvingbody']; ?> </td>
+                                <td> <?php echo $developer['grantamount']; ?> </td>
+                                <td> <?php echo $developer['convener']; ?> </td>
+                                <td> <?php echo $developer['fromdate']; ?> </td>
+                                <td> <?php echo $developer['enddate']; ?> </td>
+                                <td> <?php echo $developer['participantcount']; ?> </td>
                         
                                 <td>
                                     <button type="button" class="btn btn-success editbtn"> EDIT </button>
@@ -365,22 +379,6 @@ include("excel.php");
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
-
-
-    <script>
-        $(document).ready(function () {
-
-            $('#datatableid').DataTable({
-                "pagingType": "full_numbers",
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-                responsive: true,
-            });
-
-        });
-    </script>
 
     <script>
         $(document).ready(function () {
@@ -425,20 +423,12 @@ include("excel.php");
                 $('#approvingbody').val(data[4]);
                 $('#grantamount').val(data[5]);
                 $('#convener').val(data[6]);
-                $('#participantcount').val(data[6]);
+                $('#fromdate').val(data[7]);
+                $('#enddate').val(data[8]);
+                $('#participantcount').val(data[9]);
             });
         });
     </script>
-
-    <script type="text/javascript">
-        function CheckApproval(val){
-        var element=document.getElementById('approval');
-        if(val=='--SELECT A BODY--'|| val=='others')
-        element.style.display='block';
-        else  
-        element.style.display='none';
-        }
-    </script> 
 
 </body>
 </html>

@@ -1,22 +1,26 @@
 <?php
-if(isset($_POST["export"])) {	
-	$filename = "data_".date('Ymd') . ".xls";			
+include_once("connection.php");
+$sql_query = "SELECT * FROM ftpsttp";
+$resultset = mysqli_query($conn, $sql_query) or die("database error:". mysqli_error($conn));
+$developer_records = array();
+while( $rows = mysqli_fetch_assoc($resultset) ) {
+	$developer_records[] = $rows;
+}	
+if(isset($_POST["export_data"])) {	
+	$filename = "ftp_sttp_data".date('Ymd') . ".xls";			
 	header("Content-Type: application/vnd.ms-excel");
 	header("Content-Disposition: attachment; filename=\"$filename\"");	
 	$show_coloumn = false;
-	if(!empty($query_run)) {
-	  foreach($query_run as $row) {
+	if(!empty($developer_records)) {
+	  foreach($developer_records as $record) {
 		if(!$show_coloumn) {
 		  // display field/column names in first row
-		  echo implode("\t", array_keys($row)) . "\n";
+		  echo implode("\t", array_keys($record)) . "\n";
 		  $show_coloumn = true;
 		}
-		echo implode("\t", array_values($row)) . "\n";
+		echo implode("\t", array_values($record)) . "\n";
 	  }
 	}
 	exit;  
-} 
+}
 ?>
-
-
-
