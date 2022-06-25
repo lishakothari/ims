@@ -7,7 +7,7 @@ while( $rows = mysqli_fetch_assoc($resultset) ) {
 	$developer_records[] = $rows;
 }	
 if(isset($_POST["export_data"])) {	
-	$filename = "ftp_sttp_data".date('Ymd') . ".xls";			
+	$filename = "FCRIT_FTP_STP_DATA".date('dmY') . ".xls";			
 	header("Content-Type: application/vnd.ms-excel");
 	header("Content-Disposition: attachment; filename=\"$filename\"");	
 	$show_coloumn = false;
